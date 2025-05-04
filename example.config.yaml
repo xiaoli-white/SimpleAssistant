@@ -1,0 +1,20 @@
+providers:
+  openai:
+    name: openai
+    description: OpenAI
+    base_url: https://api.openai.com/v1
+    api_key: <your-api-key>
+models:
+  GPT-4o-mini:
+    name: GPT-4o-mini
+    description: GPT-4o-mini
+    provider: openai
+    model_name: gpt-4o-mini
+    temperature: 0.7
+    max_tokens: 8192
+mcp-servers:
+  builtin_mcp_tools:
+    name: Builtin MCP Tools
+    description: Builtin MCP Tools
+    protocol: sse
+    url: http://127.0.0.1:8000/sse

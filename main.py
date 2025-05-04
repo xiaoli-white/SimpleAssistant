@@ -1,4 +1,5 @@
 import asyncio
+import sys
 
 from langchain_core.messages import SystemMessage, HumanMessage
 from langchain_mcp_adapters.tools import load_mcp_tools
@@ -28,7 +29,11 @@ def handle_event(event):
 
 
 async def call_model(config: Config, tools: list):
-    model: Model = config["models"]["qwen3-235B-A22B"]
+    if len(sys.argv) >= 2:
+        modelName: str = sys.argv[1]
+        model: Model = config["models"][modelName]
+    else:
+        model: Model = list(config["models"].values())[0]
     agent = create_react_agent(model.getChatModel(config["providers"][model.provider]), tools)
     message: str = input()
     messages: list = [SystemMessage(""), HumanMessage(message)]
