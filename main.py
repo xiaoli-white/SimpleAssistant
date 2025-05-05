@@ -1,5 +1,7 @@
+import multiprocessing
 import asyncio
 import platform
+import subprocess
 import sys
 
 from langchain_core.messages import SystemMessage, HumanMessage
@@ -10,6 +12,12 @@ from mcp import ClientSession
 from config import loadConfig, Model, Config
 
 config_path: str = 'config.yaml'
+
+
+def start_builtin_mcp_tools():
+    result: subprocess.CompletedProcess = subprocess.run([sys.executable, "./builtin_mcp_tools.py"], capture_output=True,
+                                                         text=True)
+    return result
 
 
 def handle_event(event):
@@ -72,4 +80,10 @@ async def main():
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    process: multiprocessing.Process = multiprocessing.Process(target=start_builtin_mcp_tools)
+    process.daemon = True
+    process.start()
+
+    loop = asyncio.ProactorEventLoop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(main())

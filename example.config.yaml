@@ -19,3 +19,10 @@ mcp-servers:
     description: Builtin MCP Tools
     protocol: sse
     url: http://127.0.0.1:8000/sse
+  playwright-mcp:
+    name: playwright-mcp
+    description: playwright-mcp
+    protocol: stdio
+    command: npx
+    args:
+      - "@playwright/mcp@latest"
