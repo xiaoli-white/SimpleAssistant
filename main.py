@@ -1,4 +1,5 @@
 import asyncio
+import platform
 import sys
 
 from langchain_core.messages import SystemMessage, HumanMessage
@@ -36,7 +37,8 @@ async def call_model(config: Config, tools: list):
         model: Model = list(config["models"].values())[0]
     agent = create_react_agent(model.getChatModel(config["providers"][model.provider]), tools)
     message: str = input()
-    messages: list = [SystemMessage(""), HumanMessage(message)]
+    messages: list = [SystemMessage(config["systemPrompt"] + f"\nPlatform: '{platform.platform()}'"),
+                      HumanMessage(message)]
     async for event in agent.astream_events({"messages": messages}):
         handle_event(event)
 

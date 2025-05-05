@@ -1,3 +1,4 @@
+system-prompt: You are a helpful assistant.
 providers:
   openai:
     name: openai

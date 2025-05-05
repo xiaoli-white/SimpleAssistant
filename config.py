@@ -59,6 +59,7 @@ class MCPServer:
 
 
 class Config(TypedDict):
+    systemPrompt: str
     providers: dict[str, Provider]
     models: dict[str, Model]
     mcpServers: dict[str, MCPServer]
@@ -76,4 +77,5 @@ def loadConfig(configFilePath: str) -> Config:
     mcpServers = {}
     for _, mcpServer in data["mcp-servers"].items():
         mcpServers[mcpServer["name"]] = MCPServer(**mcpServer)
-    return Config(providers=providers, models=models, mcpServers=mcpServers)
+    return Config(systemPrompt=getattr(data, "system-prompt", ""), providers=providers, models=models,
+                  mcpServers=mcpServers)
