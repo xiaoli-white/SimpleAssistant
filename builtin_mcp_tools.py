@@ -1,4 +1,5 @@
 import subprocess
+from datetime import datetime
 from typing import Any
 
 from mcp.server.fastmcp import FastMCP
@@ -12,6 +13,10 @@ def execute_command(command: list[str]) -> dict[str, Any]:
     result: subprocess.CompletedProcess = subprocess.run(command, capture_output=True, text=True)
     return {"returnCode": result.returncode, "stdout": result.stdout, "stderr": result.stderr}
 
+@mcp.tool()
+def current_time() -> str:
+    """Get the current time."""
+    return "The current time is " + str(datetime.now())
 
 if __name__ == '__main__':
     mcp.run(transport="sse")
