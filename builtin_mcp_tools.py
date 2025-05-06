@@ -1,9 +1,12 @@
+import io
 import os.path
 import subprocess
 from datetime import datetime
 from os import _Environ
 from typing import Any, Optional, Union
 
+import pyautogui
+from PIL import Image
 from RestrictedPython import compile_restricted, safe_globals
 from mcp.server.fastmcp import FastMCP
 
@@ -13,21 +16,24 @@ mcp: FastMCP = FastMCP("builtin_mcp_tools", settings={"host": "0.0.0.0", "port":
 @mcp.tool()
 def execute_command(command: list[str], inputContent: Optional[str] = None) -> dict[str, Any]:
     """Execute the command in the shell."""
-    result: subprocess.CompletedProcess = subprocess.run(command,input=inputContent, capture_output=True, text=True)
+    result: subprocess.CompletedProcess = subprocess.run(command, input=inputContent, capture_output=True, text=True)
     return {"returnCode": result.returncode, "stdout": result.stdout, "stderr": result.stderr}
+
 
 @mcp.tool()
 def execute_python_code(code: str) -> dict[str, Any]:
     """Execute the python code in the shell."""
     byteCode = compile_restricted(code, "inline", "exec")
     localVars = {}
-    exec(byteCode,safe_globals, localVars)
+    exec(byteCode, safe_globals, localVars)
     return localVars
+
 
 @mcp.tool()
 def get_environment_variables() -> _Environ[str]:
     """Get the environment variables."""
     return os.environ
+
 
 @mcp.tool()
 def current_time() -> str:
@@ -145,6 +151,28 @@ def get_file_created_time(filepath: str) -> str:
 def get_file_accessed_time(filepath: str) -> str:
     """Get the accessed time of a file."""
     return str(datetime.fromtimestamp(os.path.getatime(filepath)))
+
+
+@mcp.tool()
+def screenshot_fullscreen() -> bytes:
+    """Take a screenshot of the fullscreen."""
+    image = pyautogui.screenshot()
+    buffer = io.BytesIO()
+    image.save(buffer, format='PNG')
+    binary_data = buffer.getvalue()
+    buffer.close()
+    return binary_data
+
+
+@mcp.tool()
+def screenshot_region(x: int, y: int, width: int, height: int) -> bytes:
+    """Take a screenshot of a region."""
+    image = pyautogui.screenshot(region=(x, y, width, height))
+    buffer = io.BytesIO()
+    image.save(buffer, format='PNG')
+    binary_data = buffer.getvalue()
+    buffer.close()
+    return binary_data
 
 
 if __name__ == '__main__':
