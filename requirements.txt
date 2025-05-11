@@ -1,0 +1,9 @@
+langchain_mcp_adapters>=0.0.11
+langchain_openai>=0.3.16
+langgraph>=0.4.3
+mcp>=1.8.0
+pyautogui>=0.9.54
+PyYAML>=6.0.2
+RestrictedPython>=8.0
+RestrictedPython>=8.0
+streamlit>=1.45.0

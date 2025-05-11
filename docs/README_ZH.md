@@ -12,50 +12,62 @@ Simple Assistant
 
 # 如何使用
 
-## 1. 创建虚拟环境(可选)
+## 1. 克隆存储库
 
-### 1.1. 创建虚拟环境
+```bash
+git clone https://github.com/xiaoli-white/SimpleAssistant.git
+```
+
+## 2. 创建虚拟环境(可选)
+
+### 2.1. 创建虚拟环境
 
 ```bash
 conda create -n SimpleAssistant python=3.11 -y
 ```
 
-### 1.2 激活虚拟环境
+### 2.2 激活虚拟环境
 
 ```bash
 conda activate SimpleAssistant
 ```
 
-## 2. 安装依赖
+## 3. 安装依赖
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## 3. 配置文件
+## 4. 配置文件
 
-### 3.1. 复制配置文件
+### 4.1. 复制配置文件
 
 如果您使用的是 Windows，请运行以下命令复制配置文件。
 
 ```bat
 copy config.yaml.example config.yaml
 ```
+
 如果您使用的是 Linux 或 macOS，请运行以下命令复制配置文件。
+
 ```bash
 cp config.yaml.example config.yaml
 ```
 
-### 3.2. 编辑配置文件
+### 4.2. 编辑配置文件
 
-#### 3.2.1. 设置系统提示(或使用默认)
+#### 4.2.1. 设置系统提示(或使用默认)
+
 例如：
+
 ```yaml
 system_prompt: You are a helpful assistant.
 ```
 
-#### 3.2.2. 设置提供商和模型
+#### 4.2.2. 设置提供商和模型
+
 格式：
+
 ```yaml
 providers:
   provider-name:
@@ -73,8 +85,10 @@ models:
     max_tokens: max tokens(Optional)
 ```
 
-#### 3.2.3. 设置mcp服务器
+#### 4.2.3. 设置mcp服务器
+
 格式：
+
 ```yaml
 mcp-servers:
   mcp-server-name:
@@ -91,7 +105,7 @@ mcp-servers:
       - ...
 ```
 
-## 4. 运行webui
+## 5. 运行webui
 
 ```bash
 streamlit run main.py
