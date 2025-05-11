@@ -1,4 +1,3 @@
-import io
 import os.path
 import subprocess
 from datetime import datetime
@@ -6,7 +5,6 @@ from os import _Environ
 from typing import Any, Optional, Union
 
 import pyautogui
-from PIL import Image
 from RestrictedPython import compile_restricted, safe_globals
 from mcp.server.fastmcp import FastMCP
 
@@ -154,25 +152,25 @@ def get_file_accessed_time(filepath: str) -> str:
 
 
 @mcp.tool()
-def screenshot_fullscreen() -> bytes:
-    """Take a screenshot of the fullscreen."""
-    image = pyautogui.screenshot()
-    buffer = io.BytesIO()
-    image.save(buffer, format='PNG')
-    binary_data = buffer.getvalue()
-    buffer.close()
-    return binary_data
+def screenshot_fullscreen(outputPath: str) -> Optional[Exception]:
+    """Take a screenshot of the fullscreen and save to a file."""
+    try:
+        image = pyautogui.screenshot()
+        image.save(outputPath)
+        return None
+    except Exception as e:
+        return e
 
 
 @mcp.tool()
-def screenshot_region(x: int, y: int, width: int, height: int) -> bytes:
-    """Take a screenshot of a region."""
-    image = pyautogui.screenshot(region=(x, y, width, height))
-    buffer = io.BytesIO()
-    image.save(buffer, format='PNG')
-    binary_data = buffer.getvalue()
-    buffer.close()
-    return binary_data
+def screenshot_region(x: int, y: int, width: int, height: int, outputPath: str) -> Optional[Exception]:
+    """Take a screenshot of a region and save to a file."""
+    try:
+        image = pyautogui.screenshot(region=(x, y, width, height))
+        image.save(outputPath)
+        return None
+    except Exception as e:
+        return e
 
 
 if __name__ == '__main__':
