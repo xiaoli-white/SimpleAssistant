@@ -11,7 +11,7 @@ from mcp.client.sse import sse_client
 class Provider:
     name: str
     base_url: str
-    api_key: str
+    api_key: str = ""
     description: Optional[str] = None
 
 
